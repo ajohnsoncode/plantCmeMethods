@@ -182,8 +182,8 @@ outputName = [name,'_meanProfile.fig'];
 saveas(gcf,outputName)
 
 % save the data
-meanProfileCombined.master = Chan1Mean;
-meanProfileCombined.masterSEM = Chan1SEM;
+meanProfileCombined.primary = Chan1Mean;
+meanProfileCombined.primarySEM = Chan1SEM;
 meanProfileCombined.n = size(Chan1,1);
 meanProfileCombined.timeLine = timeLine;
 
