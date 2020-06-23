@@ -96,8 +96,8 @@ ylabel({'Norm. Fluro (AU).'});
 saveas(gcf,[cellInfo.no,'_normMeanFluro.fig'])
 
 %% save the data
-meanProfile.master = Chan1Mean;
-meanProfile.masterSEM = Chan1SEM;
+meanProfile.primary = Chan1Mean;
+meanProfile.primarySEM = Chan1SEM;
 meanProfile.n = size(Chan1Mean,1);
 meanProfile.timeLine = -(size(Chan1Mean,1)):1:0;
 
