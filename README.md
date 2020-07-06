@@ -4,7 +4,7 @@ Code for the quantitative analysis of plant clathrin-mediated endocytosis (CME).
 
 From the paper;
 
-"Experimental toolbox for quantitative evaluation of clathrin-mediated endocytosis in the plant model Arabidopsis"
+# "Experimental toolbox for quantitative evaluation of clathrin-mediated endocytosis in the plant model Arabidopsis"
 Alexander Johnson, Nataliia Gnyliukh, Walter A. Kaufmann, Madhumitha Narasimhan, Grégory Vert, Sebastian Y. Bednarek, Jiří Friml
 Journal of Cell Science 2020 : jcs.248062 doi: 10.1242/jcs.248062 Published 2 July 2020
 
