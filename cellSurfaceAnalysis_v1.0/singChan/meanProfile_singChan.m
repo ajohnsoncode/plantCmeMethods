@@ -64,10 +64,10 @@ x = x([x.toKeep] == 1);
 rangeMax = max(meanRange);
 
 for i = 1:size(x,2)
-    if size(x(i).A(1,:),2) == rangeMax / xFactor
+    if (size(x(i).A(1,:),2)*xFactor) == rangeMax
         Chan1(i,:) = x(i).A(1,:);
     else
-        padSize = (rangeMax - x(i).lifetime_s) /xFactor;
+        padSize = round((rangeMax - ((size(x(i).A,2) * xFactor)))/xFactor);
         Chan1(i,:) = padarray(x(i).A(1,:),[0 padSize],NaN,'pre');
     end
 end
@@ -96,10 +96,10 @@ ylabel({'Norm. Fluro (AU).'});
 saveas(gcf,[cellInfo.no,'_normMeanFluro.fig'])
 
 %% save the data
-meanProfile.primary = Chan1Mean;
-meanProfile.primarySEM = Chan1SEM;
+meanProfile.master = Chan1Mean;
+meanProfile.masterSEM = Chan1SEM;
 meanProfile.n = size(Chan1Mean,1);
-meanProfile.timeLine = -(size(Chan1Mean,1)):1:0;
+meanProfile.timeLine = timeLine;
 
 outputName = [cellInfo.no,'_meanProfile.mat'];
 save(outputName,'meanProfile')
