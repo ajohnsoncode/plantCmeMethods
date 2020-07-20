@@ -5,7 +5,7 @@ function combineDualChanData
 % - Combines all the clean tracks together
 % - makes a mean profile using all the combined tracks
 % 
-% AJ 18/10/2019
+% AJ 18/10/2019 (mod 20/07/2020)
 
 %% Sort out folders and storage location
 
@@ -150,11 +150,11 @@ x = x([x.toKeep] == 1);
 rangeMax = max(meanRange);
 
 for i = 1:size(x,2)
-    if size(x(i).A(1,:),2) == rangeMax /xFactor
+    if (size(x(i).A(1,:),2)*xFactor) == rangeMax
         Chan1(i,:) = x(i).A(1,:);
         Chan2(i,:) = x(i).A(2,:);
     else
-        padSize = (rangeMax - x(i).lifetime_s) / xFactor;
+        padSize = round((rangeMax - ((size(x(i).A,2) * xFactor)))/xFactor);
         Chan1(i,:) = padarray(x(i).A(1,:),[0 padSize],NaN,'pre');
         Chan2(i,:) = padarray(x(i).A(2,:),[0 padSize],NaN,'pre');
     end
@@ -192,10 +192,10 @@ outputName = [name,'_meanProfile.fig'];
 saveas(gcf,outputName)
 
 % save the data
-meanProfileCombined.primary = Chan1Mean;
-meanProfileCombined.primarySEM = Chan1SEM;
-meanProfileCombined.secondary = Chan2Mean;
-meanProfileCombined.secondarySEM = Chan2SEM;
+meanProfileCombined.master = Chan1Mean;
+meanProfileCombined.masterSEM = Chan1SEM;
+meanProfileCombined.slave = Chan2Mean;
+meanProfileCombined.slaveSEM = Chan2SEM;
 meanProfileCombined.n = size(Chan1,1);
 meanProfileCombined.timeLine = timeLine;
 
