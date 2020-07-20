@@ -3,7 +3,7 @@ function meanProfile_DualChan(cellInfo)
 % Plots the normalized fluorescent profile of tracks which have the mean
 % lifetime (+/- 3 frames).
 %
-% AJ (last mod 17/10/2019)
+% AJ (last mod 20/07/2020)
 
 %% load the time info
 frameGap = cellInfo.frameGap;
@@ -34,7 +34,7 @@ elseif b < a
 end
 
 % mean range
-meanRange = meanLifetime-3:meanLifetime+3;
+meanRange = meanLifetime-(3*xFactor):xFactor:meanLifetime+(3*xFactor);
 
 for i = 1:size(tracks,2)
     if sum(ismember(meanRange,tracks(i).lifetime_s)) >= 1
@@ -48,7 +48,7 @@ x = tracks([tracks.toKeep] == 1);
 
 % clean tracks with GEs
 for i = 1:size(x,2)
-    if numel(x(i).A(1,:)) == x(i).lifetime_s
+    if (numel(x(i).A(1,:))*xFactor) == x(i).lifetime_s
         x(i).toKeep = 1;
     else
         x(i).toKeep = 0;
@@ -60,11 +60,11 @@ x = x([x.toKeep] == 1);
 rangeMax = max(meanRange);
 
 for i = 1:size(x,2)
-    if size(x(i).A(1,:),2) == rangeMax
+    if (size(x(i).A(1,:),2)*xFactor) == rangeMax
         Chan1(i,:) = x(i).A(1,:);
         Chan2(i,:) = x(i).A(2,:);
     else
-        padSize = rangeMax - x(i).lifetime_s;
+        padSize = round((rangeMax - ((size(x(i).A,2) * xFactor)))/xFactor);
         Chan1(i,:) = padarray(x(i).A(1,:),[0 padSize],NaN,'pre');
         Chan2(i,:) = padarray(x(i).A(2,:),[0 padSize],NaN,'pre');
     end
@@ -102,12 +102,12 @@ ylabel({'Norm. Fluro (AU).'});
 saveas(gcf,[cellInfo.no,'_normMeanFluro.fig'])
 
 %% save the data
-meanProfile.primary = Chan1Mean;
-meanProfile.primarySEM = Chan1SEM;
-meanProfile.secondary = Chan2Mean;
-meanProfile.secondarySEM = Chan2SEM;
+meanProfile.master = Chan1Mean;
+meanProfile.masterSEM = Chan1SEM;
+meanProfile.slave = Chan2Mean;
+meanProfile.slaveSEM = Chan2SEM;
 meanProfile.n = size(Chan1Mean,1);
-meanProfile.timeLine = -(size(Chan1Mean,1)):1:0;
+meanProfile.timeLine = timeLine;
 
 outputName = [cellInfo.no,'_meanProfile.mat'];
 save(outputName,'meanProfile')
