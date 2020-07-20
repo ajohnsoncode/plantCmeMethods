@@ -3,7 +3,7 @@ function meanProfile_singChan(cellInfo)
 % Plots the normalized fluorescent profile of tracks which have the mean
 % lifetime (+/- 3 frames).
 %
-% AJ (last mod 17/10/2019)
+% AJ (last mod 20/07/2020)
 
 %% load the time info
 frameGap = cellInfo.frameGap;
