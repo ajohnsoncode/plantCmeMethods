@@ -36,6 +36,9 @@ end
 % mean range
 meanRange = meanLifetime-(3*xFactor):xFactor:meanLifetime+(3*xFactor);
 
+% rounds up mean range valvues to cope with super precise time gaps
+meanRange = round(meanRange,4);
+
 for i = 1:size(tracks,2)
     if sum(ismember(meanRange,tracks(i).lifetime_s)) >= 1
         tracks(i).toKeep = 1;
